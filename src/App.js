@@ -1,24 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import Logo from './componentes/Logo/Logo';
+import Container from './componentes/Layout/Container/Container';
+import Input from './componentes/Forms/Input/Input';
+import { useState } from 'react';
+import Button from './componentes/Forms/Button/Button';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Container customClass='min-height'>
+        <Logo/>
+        <Input
+          type="text"
+          text={"Key da API-Football"}
+          placeholder="Insira sua Key"
+          name="nome"
+        />
+        <Button text='Validar Key'/>
+      </Container>
+    </>
   );
 }
 
