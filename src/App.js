@@ -12,20 +12,14 @@ function App() {
   const [keyValida, setKeyValida] = useState(false)
   const [listaPaises, setListaPaises] = useState([])
   const [pais, setPais] = useState('')
+  const [listaLigas, setListaLigas] = useState([])
+  const [liga, setLiga] = useState([])
 
-  function consultaPaises() {
-    fetch("https://v3.football.api-sports.io/countries", {
-        method: 'GET',
-        headers: {
-          "x-rapidapi-host": "v3.football.api-sports.io",
-          "x-rapidapi-key": key
-        }
-      })
-      .then((resposta) => resposta.json())
-      .then((dados) => {
-        setListaPaises(dados.response)
-      })
-  }
+  useEffect(()=>{
+    if (pais !== '' && pais !== undefined) {
+      consultaLigas();
+    }
+  }, [pais])
 
   function validaKey() {
     if (key !== '') {
@@ -48,6 +42,35 @@ function App() {
         }
       })
     }
+  }
+
+  function consultaPaises() {
+    fetch("https://v3.football.api-sports.io/countries", {
+        method: 'GET',
+        headers: {
+          "x-rapidapi-host": "v3.football.api-sports.io",
+          "x-rapidapi-key": key
+        }
+      })
+      .then((resposta) => resposta.json())
+      .then((dados) => {
+        setListaPaises(dados.response)
+      })
+  }
+
+  function consultaLigas() {
+    fetch(`https://v3.football.api-sports.io/leagues?country=${pais}`, {
+        method: 'GET',
+        headers: {
+          "x-rapidapi-host": "v3.football.api-sports.io",
+          "x-rapidapi-key": key
+        }
+      })
+      .then((resposta) => resposta.json())
+      .then((dados) => {
+        console.log(dados);
+        setListaLigas(dados.response)
+      })
   }
 
   function handleChangeKey(e) {
@@ -74,15 +97,28 @@ function App() {
         {
           keyValida && 
           
-          <>
-            <Select
-              name="pais_id"
-              text="Selecione um País" 
-              options={listaPaises}
-              handleOnChange={handleOnChangePais}
-            />
-            <Button text='Selecionar País'/>
-          </>
+          <Select
+            name="pais_id"
+            text="Selecione um País" 
+            options={listaPaises}
+            handleOnChange={handleOnChangePais}
+            opValue="name"
+            opKey="name"
+            opText="name"
+          />
+        }
+
+        {
+          pais && 
+          <Select
+            name="liga_id"
+            text="Selecione uma liga" 
+            options={listaLigas}
+            handleOnChange={handleOnChangePais}
+            opValue="league[id]"
+            opKey="league[id]"
+            opText="league.name"
+          />
         }
       </Container>
     </>
