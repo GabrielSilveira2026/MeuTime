@@ -81,6 +81,10 @@ function App() {
     setPais(e.target.value)
   }
 
+  function handleOnChangeLiga(e){
+    setLiga(e.target.value)
+  }
+
   return (
     <>
       <Container customClass='min-height'>
@@ -102,9 +106,8 @@ function App() {
             text="Selecione um País" 
             options={listaPaises}
             handleOnChange={handleOnChangePais}
-            opValue="name"
-            opKey="name"
-            opText="name"
+            value={pais}
+            tipo="pais"
           />
         }
 
@@ -114,10 +117,8 @@ function App() {
             name="liga_id"
             text="Selecione uma liga" 
             options={listaLigas}
-            handleOnChange={handleOnChangePais}
-            opValue="league[id]"
-            opKey="league[id]"
-            opText="league.name"
+            handleOnChange={handleOnChangeLiga}
+            tipo="liga"
           />
         }
       </Container>
